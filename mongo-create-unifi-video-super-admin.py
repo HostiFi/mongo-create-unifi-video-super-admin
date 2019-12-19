@@ -10,6 +10,7 @@ from bson.objectid import ObjectId
 import bcrypt
 import bson
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-u','--username', help='UniFi Video username to create')
 parser.add_argument('-e','--email', help='UniFi Video username to create')
@@ -24,12 +25,18 @@ class Server():
     def __init__(self, server_name):
         self.server_name = server_name
 
+    def _random_api_key(size=32, chars=string.ascii_uppercase + string.ascii_lowercase):
+        return ''.join(random.choice(chars) for _ in range(size))
+
+    def _random_adoption_key(size=8, chars=string.ascii_uppercase + string.ascii_lowercase):
+        return ''.join(random.choice(chars) for _ in range(size))
+
     def _create_user(self, account_id, super_admin_id):
         print "Deleting user for"
         print account_id
         response = ''
         print self.server_name
-        response = mdb.user.insert({'accountId': ObjectId(account_id), 'userGroupId': ObjectId(super_admin_id), "disabled" : False, "apiKey" : "qYppaMQrZPGVd8GaLOAdKMOZKaMEwqEX", "enableApiAccess" : True, "enableLocalAccess" : True, "motionAlertSchedules" : { }, "subscribedMotion" : [ ], "subscribedCameraConnection" : [ ], "adoptionKey" : "dJbdEhJc", "enableEmail" : True, "enablePush" : True, "sysDisconnectEmailAlert" : True, "sysDisconnectPushAlert" : True })
+        response = mdb.user.insert({'accountId': ObjectId(account_id), 'userGroupId': ObjectId(super_admin_id), "disabled" : False, "apiKey" : self._random_api_key(), "enableApiAccess" : True, "enableLocalAccess" : True, "motionAlertSchedules" : { }, "subscribedMotion" : [ ], "subscribedCameraConnection" : [ ], "adoptionKey" : self._random_adoption_key(), "enableEmail" : True, "enablePush" : True, "sysDisconnectEmailAlert" : True, "sysDisconnectPushAlert" : True })
         print "Response:"
         print response
         return response
