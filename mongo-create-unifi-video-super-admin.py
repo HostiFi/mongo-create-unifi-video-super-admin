@@ -63,7 +63,7 @@ class Server():
         return response[0]["_id"]
 
     def create_super_admin(self, username, email, password):
-        salt = bcrypt.gensalt()
+        salt = bcrypt.gensalt(prefix=b"2a")
         hashed = bcrypt.hashpw(password, salt)
         super_admin_id = self._get_super_admin_user_group_id()
         self._create_account(username, email, hashed)
