@@ -25,10 +25,10 @@ class Server():
     def __init__(self, server_name):
         self.server_name = server_name
 
-    def _random_api_key(size=32, chars=string.ascii_uppercase + string.ascii_lowercase):
+    def _random_api_key(self, size=32, chars=string.ascii_uppercase + string.ascii_lowercase):
         return ''.join(random.choice(chars) for _ in range(size))
 
-    def _random_adoption_key(size=8, chars=string.ascii_uppercase + string.ascii_lowercase):
+    def _random_adoption_key(self, size=8, chars=string.ascii_uppercase + string.ascii_lowercase):
         return ''.join(random.choice(chars) for _ in range(size))
 
     def _create_user(self, account_id, super_admin_id):
