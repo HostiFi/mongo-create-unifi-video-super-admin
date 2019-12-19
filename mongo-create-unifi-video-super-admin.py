@@ -8,6 +8,7 @@ import argparse
 import pymongo
 from bson.objectid import ObjectId
 import bcrypt
+import bson
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-u','--username', help='UniFi Video username to create')
@@ -28,7 +29,7 @@ class Server():
         print account_id
         response = ''
         print self.server_name
-        response = mdb.user.insert({'accountId': ObjectId(account_id), 'userGroupId': ObjectId(account_id), "disabled" : False, "enableApiAccess" : False, "enableLocalAccess" : True, "motionAlertSchedules" : {  }, "adoptionKey" : "gvmWzctP", "enableEmail" : True, "enablePush" : True, "sysDisconnectEmailAlert" : True, "sysDisconnectPushAlert" : True })
+        response = mdb.user.insert({'accountId': ObjectId(account_id), 'userGroupId': ObjectId(super_admin_id), "disabled" : False, "apiKey" : "qYppaMQrZPGVd8GaLOAdKMOZKaMEwqEX", "enableApiAccess" : True, "enableLocalAccess" : True, "motionAlertSchedules" : { }, "subscribedMotion" : [ ], "subscribedCameraConnection" : [ ], "adoptionKey" : "dJbdEhJc", "enableEmail" : True, "enablePush" : True, "sysDisconnectEmailAlert" : True, "sysDisconnectPushAlert" : True })
         print "Response:"
         print response
         return response
@@ -38,7 +39,7 @@ class Server():
         print username
         response = ''
         print self.server_name
-        response = mdb.account.insert({'username': username, 'password': hashed, 'name': username, 'language': 'English'})
+        response = mdb.account.insert({'email': email, 'username': username, 'password': hashed, 'name': username, 'language': 'English', "resetKey" : "katFWhM681PBOX8gwmS5rZ8S6rvKo4uW", "lastIp" : "192.247.121.76", "lastLogInTimestamp" : bson.int64.Int64(100)})
         print "Response:"
         print response
         return response
